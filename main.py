@@ -20,3 +20,4 @@ def menu():
 menu()
 for i in range(len(movies)):
     print(movies[i]["title"])
+    
