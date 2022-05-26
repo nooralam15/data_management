@@ -3,49 +3,67 @@
 #Import library 
 import json
 
-#Create a global variabe array 
+#Create global variabe arrays 
 movies = [{"title": "The Shining", "genre": "horror", "year": 1980, "rating": 93}, {"title": "Daddy's Home", "genre": "comedy", "year": 2015, "rating": 49}, {"title": "The Notebook", "genre": "romance", "year": 2004, "rating": 85}, {"title": "Love Rosie", "genre": "romance", "year": 2014, "rating": 63}, {"title": "21 Jump Street", "genre": "comedy", "year": 2012, "rating": 82}, {"title": "Super Bad", "genre": "comedy", "year": 2007, "rating": 87}, {"title": "Back to the Future", "genre": "sci-fi", "year": 1985, "rating": 94}, {"title": "The Excorsist", "genre": "horror", "year": 1973, "rating": 87}, {"title": "Texas Chainsaw Massacre", "genre": "horror", "year": 1974, "rating": 82}, {"title": "The Hunger Games", "genre": "sci-fi", "year": 2012, "rating": 81}, {"title": "Titanic", "genre": "romance", "year": 1997, "rating": 69}, {"title": "Avatar", "genre": "sci-fi", "year": 2009, "rating": 82}, {"title": "American Psycho", "genre": "horror", "year": 2000, "rating": 85}, {"title": "The Dark Knight", "genre": "action", "year": 2008, "rating": 94}, {"title": "G.I. Jane", "genre": "action", "year": 1997, "rating": 51}, {"title": "The Wolf of Wall Street", "genre": "comedy", "year": 2013, "rating": 83}, {"title": "Joker", "genre": "action", "year": 2019, "rating": 88}, {"title": "The Conjuring", "genre": "horror", "year": 2013, "rating": 83}]
+
+users = []
 
 #Create a global favorites list
 favorites = []
 
+#Create a function adds data to the json file
+def jsonAdd():
+    # Convert data to a json string
+    json_string = json.dumps(favorites)
+    #store in a file
+    file = open("data.txt", "w")
+    file.write(json_string)
+    file.close()
 
-# Convert data to a json string
-json_string = json.dumps(favorites)
 
-# The data as a JSON string may be easily saved to a file
-file = open("data.txt", "w")
-file.write(json_string)
-file.close()
+#Create a function that loads the json file and stores in a string
+def loadjson():
+    # Load a JSON string from a file
+    file = open("data.txt", "r")
+    json_string_from_file = file.read()
+    file.close()
+    #convert a json string to data
+    data2 = json.loads(json_string_from_file)
+    return data2
 
-# Load a JSON string from a file
-file = open("data.txt", "r")
-json_string_from_file = file.read()
-file.close()
+#Create a function that displays the json favroties list
+def displayData(data):
+    for info in data:
+        print(info)
 
-# the loads() method will convert a json string to data
-data2 = json.loads(json_string_from_file)
-for data in data2:
-    print(data)
+#cerate a linear search function
+def linearSearch(movies, title):
+    for element in movies:
+        if element["title"] == title:
+            return element
+    return -1
+
 
 #Create a function that will remove from favorites
 def removeFromFavorites(title):
-    for data in favorites: 
-        if data == title:
-            favorites.remove(title)
-            print("Title removed")
-        else: 
-            print("title not found")
+    results = linearSearch(movies, title)
+    if results == -1:
+        print("Title not found")
+    else:
+        favorites.remove(title)
+        jsonAdd()
+        print('title removed')
 
 
 #Create a function that will add to favorites
 def addToFavorites(title):
-    for info in movies: 
-        if title in info["title"]:
-            favorites.append(title)
-            print("title added")   
-        else: 
-            print("title not found")
+    results = linearSearch(movies, title)
+    if results == -1:
+        print("Title not found")
+    else:
+        favorites.append(title)
+        jsonAdd()
+        print('title added')
             
 
 #Create a function that will display movies by genre
@@ -65,6 +83,8 @@ def menu():
     #Create a looping variable that will rerun the menu
     loop = True
     while loop: 
+        #load the json file
+        loadjson()
 
         userInp = int(input("Enter the number to access the menu option \n 1. All movie info \n 2. Display by Genre \n 3. Add movie to favorite list \n 4. Remove movie from favorites \n 5. Display Favorites \n 6. Logout  \n"))
 
@@ -83,8 +103,22 @@ def menu():
             title = input("Enter a movie title to remove from favorites: ")
             removeFromFavorites(title)
 
-    
+        elif userInp == 5:
+            dataArray = loadjson()
+            displayData(dataArray)
 
+
+
+#Create a login check function 
+def login():
+    username = input("Enter username: ")
+    result = linearSearch()
+#Create a login menu
+def loginMenu():
+    userInp = int(input("Enter the number to access the menu option \n 1. Login \n 2. Sign Up \n 3. Exit \n "))
+
+    if userInp == 1:
+        login()
 
 menu()
     
