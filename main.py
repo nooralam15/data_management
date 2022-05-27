@@ -37,11 +37,17 @@ def displayData(data):
         print(info)
 
 #cerate a linear search function
-def linearSearch(movies, title):
-    for element in movies:
-        if element["title"] == title:
-            return element
-    return -1
+def linearSearch(item, instance):
+    if instance == "movies":
+        for element in movies:
+            if element["title"] == item:
+                return element
+        return -1
+    elif instance == "users":
+        for element in users:
+            if element["username"] == item:
+                return element
+        return -1
 
 
 #Create a function that will remove from favorites
@@ -57,7 +63,7 @@ def removeFromFavorites(title):
 
 #Create a function that will add to favorites
 def addToFavorites(title):
-    results = linearSearch(movies, title)
+    results = linearSearch(title)
     if results == -1:
         print("Title not found")
     else:
@@ -113,6 +119,11 @@ def menu():
 def login():
     username = input("Enter username: ")
     result = linearSearch()
+    while result == -1:
+        print("username not found")
+    password = input('Enter password': )
+    while password != result
+    
 #Create a login menu
 def loginMenu():
     userInp = int(input("Enter the number to access the menu option \n 1. Login \n 2. Sign Up \n 3. Exit \n "))
