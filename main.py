@@ -80,6 +80,7 @@ def displayGenre(genre):
     for i in range(len(movies)):
         if movies[i]["genre"] == genre:
             print(genre + ": " + movies[i]["title"])
+            
 
 #create a function that will display all the movie data
 def allMovies():
