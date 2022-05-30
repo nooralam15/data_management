@@ -1,1 +1,1 @@
-["The Shining", "21 Jump Street", "Titanic"]
+[{"username": "bob ", "password": "smith", "favorites": []}]

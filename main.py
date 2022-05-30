@@ -6,15 +6,14 @@ import json
 #Create global variabe arrays 
 movies = [{"title": "The Shining", "genre": "horror", "year": 1980, "rating": 93}, {"title": "Daddy's Home", "genre": "comedy", "year": 2015, "rating": 49}, {"title": "The Notebook", "genre": "romance", "year": 2004, "rating": 85}, {"title": "Love Rosie", "genre": "romance", "year": 2014, "rating": 63}, {"title": "21 Jump Street", "genre": "comedy", "year": 2012, "rating": 82}, {"title": "Super Bad", "genre": "comedy", "year": 2007, "rating": 87}, {"title": "Back to the Future", "genre": "sci-fi", "year": 1985, "rating": 94}, {"title": "The Excorsist", "genre": "horror", "year": 1973, "rating": 87}, {"title": "Texas Chainsaw Massacre", "genre": "horror", "year": 1974, "rating": 82}, {"title": "The Hunger Games", "genre": "sci-fi", "year": 2012, "rating": 81}, {"title": "Titanic", "genre": "romance", "year": 1997, "rating": 69}, {"title": "Avatar", "genre": "sci-fi", "year": 2009, "rating": 82}, {"title": "American Psycho", "genre": "horror", "year": 2000, "rating": 85}, {"title": "The Dark Knight", "genre": "action", "year": 2008, "rating": 94}, {"title": "G.I. Jane", "genre": "action", "year": 1997, "rating": 51}, {"title": "The Wolf of Wall Street", "genre": "comedy", "year": 2013, "rating": 83}, {"title": "Joker", "genre": "action", "year": 2019, "rating": 88}, {"title": "The Conjuring", "genre": "horror", "year": 2013, "rating": 83}]
 
-users = []
 
-#Create a global favorites list
-favorites = []
+#Create a global users list
+users = []
 
 #Create a function adds data to the json file
 def jsonAdd():
     # Convert data to a json string
-    json_string = json.dumps(favorites)
+    json_string = json.dumps(users)
     #store in a file
     file = open("data.txt", "w")
     file.write(json_string)
@@ -37,37 +36,37 @@ def displayData(data):
         print(info)
 
 #cerate a linear search function
-def linearSearch(item, instance):
+def linearSearch(array, item, instance):
     if instance == "movies":
-        for element in movies:
+        for element in array:
             if element["title"] == item:
                 return element
         return -1
     elif instance == "users":
-        for element in users:
+        for element in array:
             if element["username"] == item:
                 return element
         return -1
 
 
 #Create a function that will remove from favorites
-def removeFromFavorites(title):
-    results = linearSearch(movies, title)
+def removeFromFavorites(title, userFavorites):
+    results = linearSearch(title, "movies")
     if results == -1:
         print("Title not found")
     else:
-        favorites.remove(title)
+        userFavorites.remove(title)
         jsonAdd()
         print('title removed')
 
 
 #Create a function that will add to favorites
-def addToFavorites(title):
-    results = linearSearch(title)
+def addToFavorites(title, userFavorites):
+    results = linearSearch(movies, title, "movies")
     if results == -1:
         print("Title not found")
     else:
-        favorites.append(title)
+        userFavorites.append(title)
         jsonAdd()
         print('title added')
             
@@ -85,7 +84,7 @@ def allMovies():
     
 
 #Create a menu function
-def menu():
+def menu(userFavorites):
     #Create a looping variable that will rerun the menu
     loop = True
     while loop: 
@@ -103,26 +102,41 @@ def menu():
 
         elif userInp == 3:
             title = input("Enter a movie title to add to favorites: ")
-            addToFavorites(title)
+            addToFavorites(title, userFavorites)
 
         elif userInp == 4:
             title = input("Enter a movie title to remove from favorites: ")
-            removeFromFavorites(title)
+            removeFromFavorites(title, userFavorites)
 
         elif userInp == 5:
-            dataArray = loadjson()
-            displayData(dataArray)
+            displayData(userFavorites)
+
+        elif userInp == 6:
+            loop = False
 
 
+#Create a signup function
+def signup():
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    users.append({"username": username, "password": password, "favorites": []})
+    print("Signup complete")
+    jsonAdd()
+    menu(users[-1]["favorites"])
 
+    
 #Create a login check function 
 def login():
     username = input("Enter username: ")
-    result = linearSearch()
+    result = linearSearch(users, username, "users")
     while result == -1:
         print("username not found")
-    password = input('Enter password': )
-    while password != result
+        login()
+    password = input("Enter password: ")
+    while password != result["password"]:
+        print("Wrong password")
+        login()
+    menu(result["favorites"])
     
 #Create a login menu
 def loginMenu():
@@ -131,5 +145,11 @@ def loginMenu():
     if userInp == 1:
         login()
 
-menu()
+    elif userInp == 2:
+        signup()
+
+    elif userInp == 3:
+        quit()
+loginMenu()
     
+#Hello
