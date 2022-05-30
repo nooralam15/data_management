@@ -1,1 +1,1 @@
-[{"username": "noor", "password": "alam", "favorites": []}]
+[{"username": "noor", "password": "alam", "favorites": ["21 Jump Street"]}, {"username": "bob", "password": "smith", "favorites": ["Titanic", "Love Rosie"]}]
