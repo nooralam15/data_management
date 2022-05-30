@@ -7,9 +7,6 @@ import json
 movies = [{"title": "The Shining", "genre": "horror", "year": 1980, "rating": 93}, {"title": "Daddy's Home", "genre": "comedy", "year": 2015, "rating": 49}, {"title": "The Notebook", "genre": "romance", "year": 2004, "rating": 85}, {"title": "Love Rosie", "genre": "romance", "year": 2014, "rating": 63}, {"title": "21 Jump Street", "genre": "comedy", "year": 2012, "rating": 82}, {"title": "Super Bad", "genre": "comedy", "year": 2007, "rating": 87}, {"title": "Back to the Future", "genre": "sci-fi", "year": 1985, "rating": 94}, {"title": "The Excorsist", "genre": "horror", "year": 1973, "rating": 87}, {"title": "Texas Chainsaw Massacre", "genre": "horror", "year": 1974, "rating": 82}, {"title": "The Hunger Games", "genre": "sci-fi", "year": 2012, "rating": 81}, {"title": "Titanic", "genre": "romance", "year": 1997, "rating": 69}, {"title": "Avatar", "genre": "sci-fi", "year": 2009, "rating": 82}, {"title": "American Psycho", "genre": "horror", "year": 2000, "rating": 85}, {"title": "The Dark Knight", "genre": "action", "year": 2008, "rating": 94}, {"title": "G.I. Jane", "genre": "action", "year": 1997, "rating": 51}, {"title": "The Wolf of Wall Street", "genre": "comedy", "year": 2013, "rating": 83}, {"title": "Joker", "genre": "action", "year": 2019, "rating": 88}, {"title": "The Conjuring", "genre": "horror", "year": 2013, "rating": 83}]
 
 
-#Create a global users list
-users = []
-
 #Create a function adds data to the json file
 def jsonAdd():
     # Convert data to a json string
@@ -18,7 +15,6 @@ def jsonAdd():
     file = open("data.txt", "w")
     file.write(json_string)
     file.close()
-
 
 #Create a function that loads the json file and stores in a string
 def loadjson():
@@ -34,6 +30,10 @@ def loadjson():
 def displayData(data):
     for info in data:
         print(info)
+
+
+#Create a global array 
+users = loadjson()
 
 #cerate a linear search function
 def linearSearch(array, item, instance):
@@ -109,7 +109,7 @@ def menu(userFavorites):
             displayData(userFavorites)
 
         elif userInp == 6:
-            loop = False
+            return -1
 
 
 #Create a signup function
@@ -125,26 +125,25 @@ def signup():
     
 #Create a login check function 
 def login():
-    username = input("Enter username: ")
-    result = linearSearch(users, username, "users")
-    while result == -1:
-        print("username not found")
-        login()
-    password = input("Enter password: ")
-    while password != result["password"]:
-        print("Wrong password")
-        login()
-    menu(result["favorites"])
+    loop = True
+    while loop:
+        username = input("Enter username: ")
+        result = linearSearch(users, username, "users")
+        while result == -1:
+            print("username not found")
+            login()
+        password = input("Enter password: ")
+        while password != result["password"]:
+            print("Wrong password")
+            login()
+        loopControl = menu(result["favorites"])
+        if loopControl == -1:
+            loop = False
     
 #Create a login menu
 def loginMenu():
-    print(users)
-    #load Json file 
-    loadjson()
-    print(users)
     loop = True
     while loop:
-        print(users)
         userInp = int(input("Enter the number to access the menu option \n 1. Login \n 2. Sign Up \n 3. Exit \n "))
 
         if userInp == 1:
@@ -157,4 +156,3 @@ def loginMenu():
             quit()
 loginMenu()
     
-#Hello

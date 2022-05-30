@@ -1,1 +1,1 @@
-[{"username": "noor", "password": "alam", "favorites": ["21 Jump Street"]}, {"username": "bob", "password": "smith", "favorites": ["Titanic", "Love Rosie"]}]
+[{"username": "noor", "password": "alam", "favorites": ["21 Jump Street"]}, {"username": "bob", "password": "smith", "favorites": ["Titanic", "Love Rosie"]}, {"username": "omar", "password": "cool", "favorites": ["Joker"]}, {"username": "lolly", "password": "pop", "favorites": ["The Notebook"]}]
