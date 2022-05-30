@@ -22,9 +22,13 @@ def loadjson():
     file = open("data.txt", "r")
     json_string_from_file = file.read()
     file.close()
-    #convert a json string to data
-    data2 = json.loads(json_string_from_file)
-    return data2
+    #check to see if the data is empty 
+    if json_string_from_file == "":
+        return []
+    else:
+        #convert a json string to data
+        data2 = json.loads(json_string_from_file)
+        return data2
 
 #Create a function that displays the json favroties list
 def displayData(data):
