@@ -88,9 +88,6 @@ def menu(userFavorites):
     #Create a looping variable that will rerun the menu
     loop = True
     while loop: 
-        #load the json file
-        loadjson()
-
         userInp = int(input("Enter the number to access the menu option \n 1. All movie info \n 2. Display by Genre \n 3. Add movie to favorite list \n 4. Remove movie from favorites \n 5. Display Favorites \n 6. Logout  \n"))
 
         if userInp == 1:
@@ -117,13 +114,14 @@ def menu(userFavorites):
 
 #Create a signup function
 def signup():
-    username = input("Enter username: ")
-    password = input("Enter password: ")
-    users.append({"username": username, "password": password, "favorites": []})
-    print("Signup complete")
-    jsonAdd()
-    menu(users[-1]["favorites"])
-
+    loop = True
+    while loop:
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        users.append({"username": username, "password": password, "favorites": []})
+        print("Signup complete")
+        jsonAdd()
+        loop = False
     
 #Create a login check function 
 def login():
@@ -140,16 +138,23 @@ def login():
     
 #Create a login menu
 def loginMenu():
-    userInp = int(input("Enter the number to access the menu option \n 1. Login \n 2. Sign Up \n 3. Exit \n "))
+    print(users)
+    #load Json file 
+    loadjson()
+    print(users)
+    loop = True
+    while loop:
+        print(users)
+        userInp = int(input("Enter the number to access the menu option \n 1. Login \n 2. Sign Up \n 3. Exit \n "))
 
-    if userInp == 1:
-        login()
+        if userInp == 1:
+            login()
 
-    elif userInp == 2:
-        signup()
+        elif userInp == 2:
+            signup()
 
-    elif userInp == 3:
-        quit()
+        elif userInp == 3:
+            quit()
 loginMenu()
     
 #Hello
